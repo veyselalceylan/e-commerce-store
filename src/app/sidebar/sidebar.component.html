@@ -1,0 +1,191 @@
+<p-sidebar #sidebarRef [(visible)]="sidebarOpened" [style]="{'width': '25rem'}">
+  <ng-template pTemplate="headless">
+    <a href="/" style="margin-left: 20px;margin-top: 10px;"
+      class="d-flex align-items-center pt-3 pb-3 link-dark text-decoration-none">
+      <span class="fw-semibold" style="font-size: 18px;">ONYX'N THINGS</span>
+    </a>
+    <hr>
+    <div class="accordion" id="accordionExample"style="height: 5000px;overflow-y: auto;">
+      
+      <!-- Kids Accordion -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="account-collapse"
+            style="font-size: 18px;">
+            Kids Models
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a routerLink="/kids" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-child" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>All Kid Models</a></li>
+              <li><a routerLink="/kids/boys" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-child" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Boy Models</a></li>
+              <li><a routerLink="/kids/girls" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-child-dress" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Girl Models</a></li>
+              <li><a routerLink="/kids/baby" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-baby" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Baby Models</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <!-- Men Accordion -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="account-collapse"
+            style="font-size: 18px;">
+            Men Models
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a routerLink="/man" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-check-double" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>All Man Models</a></li>
+              <li><a routerLink="/man/casual" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-shirt" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Casual Models</a></li>
+              <li><a routerLink="/man/business" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-user-tie" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Business Models</a></li>
+              <li><a routerLink="/man/doctor" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-user-doctor" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Doctor Models</a></li>
+              <li><a routerLink="/man/hero" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-mask" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Hero Models</a></li>
+              <li><a routerLink="/man/music" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-music" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Music Models</a></li>
+              <li><a routerLink="/man/soldier" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-person-military-rifle" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Soldier Models</a></li>
+              <li><a routerLink="/man/sport" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-baseball" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Sports Models</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <!-- Women Accordion -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingWomen">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#women-collapse" aria-expanded="false" aria-controls="women-collapse"
+            style="font-size: 18px;">
+            Women Models
+          </button>
+        </h2>
+        <div id="women-collapse" class="accordion-collapse collapse" aria-labelledby="headingWomen"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a routerLink="/woman" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-check-double" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>All Woman Models</a></li>
+              <li><a routerLink="/woman/casual" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-dress" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Casual Models</a></li>
+              <li><a routerLink="/woman/business" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-half-dress" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Business Models</a></li>
+              <li><a routerLink="/woman/doctor" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-user-nurse" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Doctor Models</a></li>
+              <li><a routerLink="/woman/hero" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-mask" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Hero Models</a></li>
+              <li><a routerLink="/woman/music" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-music" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Music Models</a></li>
+              <li><a routerLink="/woman/kitchen" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-kitchen-set" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Kitchen Models</a></li>
+              <li><a routerLink="/woman/sport" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-baseball" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Sports Models</a></li>
+              <li><a routerLink="/woman/soldier" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-person-military-rifle" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Soldier Models</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <!-- Other Models Accordion -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOthers">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#others-collapse" aria-expanded="false" aria-controls="others-collapse"
+            style="font-size: 18px;">
+            Other Models
+          </button>
+        </h2>
+        <div id="others-collapse" class="accordion-collapse collapse" aria-labelledby="headingOthers"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li><a routerLink="/other" style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+                  <i class="fas fa-check-double" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>All Other Models</a></li>
+              <li><a routerLink="/other/married" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-ring" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Weddings</a></li>
+              <li><a routerLink="/other/lover" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-face-kiss-wink-heart" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Lover</a></li>
+              <li><a routerLink="/other/family" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-people-roof" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Family</a></li>
+              <li><a routerLink="/other/school" style="text-decoration: none; font-size: 16px;"
+                  class="link-dark rounded">
+                  <i class="fas fa-school" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>School</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    <hr>
+    <div style="margin-left: 15px; margin-top: 12px;display: flex;flex-direction: column;gap: 10px;">
+      <h2 class="accordion-header">
+        <a class="accordion-button" type="button"  aria-expanded="false" routerLink="/about"
+          style="font-size: 18px;background-color: #f0f8ff00;color: #3f4246;">
+          About
+      </a>
+      </h2>
+      <h2 class="accordion-header">
+        <a class="accordion-button" type="button"  aria-expanded="false"routerLink="/privacy"
+          style="font-size: 18px;background-color: #f0f8ff00;color: #3f4246;">
+          Privacy
+      </a>
+      </h2>
+      <h2 class="accordion-header">
+        <a class="accordion-button" type="button"  aria-expanded="false"routerLink="/contact-us"
+          style="font-size: 18px;background-color: #f0f8ff00; color: #3f4246;">
+          Contact-Us
+      </a>
+      </h2>
+    </div>
+    <div style="display: flex;height: 100%;align-items: flex-end;margin-inline: 15px;margin-bottom: 15px;">
+      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" *ngIf="currentUser; else noUser">
+        <li><a routerLink="/profile" *ngIf="!currentUser.isAnonymous" style="text-decoration: none; font-size: 16px;"
+            class="link-dark rounded">
+            <i class="fas fa-id-card" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Profile</a></li>
+        <li><a (click)="logOut()" *ngIf="currentUser && !currentUser.isAnonymous"
+            style="text-decoration: none; font-size: 16px;" class="link-dark rounded">
+            <i class="fas fa-arrow-right-from-bracket" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Sign out</a></li>
+        <li><a routerLink="/signin" *ngIf="!currentUser" style="text-decoration: none; font-size: 16px;"
+            class="link-dark rounded">
+            <i class="fas fa-arrow-right-from-bracket" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Login</a></li>
+      </ul>
+      <ng-template #noUser>
+        <a class="btn btn-menu align-items-center rounded" routerLink="/signin" style="font-size: 18px;"
+          aria-expanded="false">
+          <i class="fas fa-arrow-right-from-bracket" style="margin-right: 8px;  color: rgb(5, 4, 78);"></i>Sign In
+        </a>
+      </ng-template>
+    </div>
+
+  </ng-template>
+
+</p-sidebar>

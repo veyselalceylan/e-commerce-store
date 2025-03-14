@@ -1,0 +1,44 @@
+:host {
+  ::ng-deep .p-card .p-card-content {
+    padding: 0;
+    transition: transform 0.3s ease;
+  }
+}
+
+:host {
+  ::ng-deep .p-card-body {
+    background-color: #d2f4ea33;
+  }
+}
+
+:host {
+  ::ng-deep .p-card:hover {
+    padding: 0;
+    transform: scale(1.003);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.product-card {
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: scale(1.01);
+}
+.item {
+  width: calc(25% - 10px); 
+  margin: 5px;
+}
+
+@media (max-width: 768px) {
+  .item {
+    width: calc(50% - 10px);
+  }
+}
+:host {
+  ::ng-deep .p-button{
+    width:100% !important;
+  }
+}

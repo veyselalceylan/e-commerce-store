@@ -1,0 +1,19 @@
+<div *ngIf="isPopupVisible" class="popup-overlay">
+    <div class="popup-content">
+      <button class="close-btn" (click)="closePopup()">×</button>
+      <h2>Personalize Your Own Caricatures!</h2>
+      <p>
+        If you'd like us to create a unique caricature just for you, feel free to upload a photo. 
+        It can be a photo you've found on any website, or one of your own. Our artists will turn it into 
+        a custom caricature that's completely personalized!
+      </p>
+      <div class="popup-checkbox">
+        <input type="checkbox" id="dontShowAgain" [(ngModel)]="dontShowAgain" />
+        <label for="dontShowAgain">Don't show again</label>
+      </div>
+      <div class="popup-actions">
+        <p-button label="Close" icon="pi pi-times" severity="secondary"  (click)="handleButtonClick()"></p-button>
+      </div>
+    </div>
+  </div>
+  

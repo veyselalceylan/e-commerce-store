@@ -1,0 +1,67 @@
+.menu-mobile {
+  display: none;
+  position: absolute;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 999;
+}
+
+.menu-open {
+  display: block;
+}
+
+.menu-closed {
+  display: none;
+}
+.borderless-input {
+  border: none;
+  border-bottom: 1px solid #636363;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  height: 100%;
+  padding-right: 40px; 
+  width: 70%;
+  font-size: 18px;
+}
+
+.borderless-input:focus {
+  box-shadow: none;
+  outline: none;
+  border-bottom: 2px solid #636363;
+}
+
+.close-btn {
+  position: absolute;
+  right: 10px; 
+  top: 50%;
+  transform: translateY(-50%); 
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px; 
+  color: #636363; 
+}
+
+.close-btn:focus {
+  outline: none;
+}
+:host ::ng-deep .p-button{
+  font-size:20px;  
+}
+:host ::ng-deep .p-button .p-badge {
+  margin-left: 0rem;
+  min-width: 15px;
+  height: 15px;
+  align-items: center;
+  color: #ffffff;
+  background-color: #757ae9;
+  position: absolute;
+  right: 0;
+  top: 5px;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+}

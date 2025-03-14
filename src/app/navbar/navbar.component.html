@@ -1,0 +1,113 @@
+<header class="header-v4">
+    <div class="container-menu-desktop">
+        <div class="top-bar" [ngStyle]="{'background-color': pagePerference.color, 'height': '60px', 'position': 'fixed', 'width': '100%', 'z-index': '1'}">
+            <div class="content-topbar flex-sb-m h-full container" style="height: 60px;">
+                <div class="left-top-bar"
+                    style="display: flex;align-items: center;justify-content: center;height: 60px; letter-spacing: 1px;">
+                   {{ pagePerference.navbarTitle}}
+                </div>
+            </div>
+        </div>
+        <div class="wrap-menu-desktop how-shadow1">
+            <nav class="limiter-menu-desktop container">
+                <span routerLink="/home" class="logo" style="font-weight: 700;">
+                    ONYX'N'THINGS
+                </span>
+                <div *ngIf="!showSearchBar" class="menu-desktop">
+                    <ul class="main-menu">
+                        <li><a routerLink="/kids" style="text-decoration: none;">Kid Models</a></li>
+                        <li><a routerLink="/man" style="text-decoration: none;">Men Models</a></li>
+                        <li><a routerLink="/woman" style="text-decoration: none;">Women Models</a></li>
+                        <li><a routerLink="/other/married" style="text-decoration: none;">Wedding Models</a></li>
+                        <li><a routerLink="/other/school" style="text-decoration: none;">School Models</a></li>
+                        <li><a routerLink="/other/lover" style="text-decoration: none;">Lover Models</a></li>
+                        <li><a routerLink="/other/family" style="text-decoration: none;">Family Models</a></li>
+                    </ul>
+                </div>
+                <div *ngIf="showSearchBar" class="search-bar"
+                    style="width: 75%; display: flex; align-items: center; position: relative; margin-right: 10px;">
+                    <input type="text" class="form-control borderless-input" placeholder="Search..."
+                        style="flex: 1; width: 65%;color: #636363;" (input)="onSearchInput($event)">
+                    <button class="btn close-btn" (click)="toggleSearchBar()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="wrap-icon-header main-menu"
+                    style="justify-content: flex-end; display: flex; gap: 15px;color: #636363;">
+                    <div *ngIf="!showSearchBar" class="icon-header-item">
+                        <p-button icon="pi pi-search" (click)="toggleSearchBar()" [rounded]="true" [text]="true"
+                            severity="secondary" size="large" />
+                    </div>
+                    <div class="icon-header-item">
+                        <p-button icon="pi pi-shopping-cart" (click)="toogleShoppingChart()"
+                            *ngIf="!shoppingCart.length" [rounded]="true" [text]="true" severity="secondary"
+                            size="large" />
+                        <p-button icon="pi pi-shopping-cart" badge="{{shoppingCart.length}}" *ngIf="shoppingCart.length"
+                            [rounded]="true" [text]="true" severity="secondary" size="large"
+                            (click)="toogleShoppingChart()" />
+                    </div>
+                    <div *ngIf="currentUser; else noUser">
+                        <!-- Kullanıcı mevcut ve anonim değilse -->
+                        <div *ngIf="!currentUser.isAnonymous" class="icon-header-item" style="display: flex; align-items: center;" routerLink="/profile"  >
+                            <p-button icon="pi pi-user" [rounded]="true" [text]="true" severity="secondary" size="large"/>
+                            <span style="font-size: 14px; margin-left: 10px;" (click)="logOut()">Log Out</span>
+                        </div>
+                    
+                        <!-- Kullanıcı mevcut ve anonim ise -->
+                        <div *ngIf="currentUser.isAnonymous" class="icon-header-item" routerLink="/signin"
+                            style="display: flex; align-items: center;">
+                            <p-button icon="pi pi-user" [rounded]="true" [text]="true" severity="secondary" size="large" />
+                            <span style="font-size: 14px; margin-left: 10px;">Login</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Kullanıcı yoksa gösterilecek içerik -->
+                    <ng-template #noUser>
+                        <div class="icon-header-item" style="display: flex; align-items: center;" >
+                            <p-button icon="pi pi-sign-in" [rounded]="true" [text]="true" severity="secondary" size="large" />
+                            <a style="font-size: 14px; margin-left: 10px;"routerLink="/signin">Login / Sign Up</a>
+                        </div>
+                    </ng-template>
+                    
+
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Header Mobile -->
+    <div class="wrap-header-mobile">
+        <!-- Logo moblie -->
+        <div class="logo-mobile" style="display: flex;align-items: center;gap: 10px;">
+            <span class="hamburger-box" (click)="toggleSidebar()">
+                <i class="fas fa-bars" style="font-size: 20px;"></i>
+            </span>
+            <span routerLink="/home" *ngIf="!showSearchBar" class="logo" style="font-weight: 700;">
+                ONYX'N'THINGS
+            </span>
+        </div>
+        <div *ngIf="showSearchBar" class="search-bar"
+            style="width: 100%; display: flex; align-items: center; position: relative; margin-right: 10px;">
+            <input type="text" class="form-control borderless-input" placeholder="Search..."
+                (input)="onSearchInput($event)" style="flex: 1; width: 70%;color: #636363;">
+            <button class="btn close-btn" (click)="toggleSearchBar()" style="color: #636363;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <!-- Icon header -->
+        <div class="wrap-icon-header flex-w flex-r-m "
+            style="justify-content: flex-end;display: flex;gap: 15px;margin-right: 10px;color: #636363;">
+            <p-button icon="pi pi-search" (click)="toggleSearchBar()" *ngIf="!showSearchBar" [rounded]="true"
+                [text]="true" severity="secondary" size="large" />
+
+            <div class="icon-header-item">
+                <p-button icon="pi pi-shopping-cart" *ngIf="!shoppingCart.length" [rounded]="true" [text]="true"
+                    severity="secondary" size="large" (click)="toogleShoppingChart()" />
+                <p-button icon="pi pi-shopping-cart" badge="{{shoppingCart.length}}" *ngIf="shoppingCart.length"
+                    [rounded]="true" [text]="true" (click)="toogleShoppingChart()" severity="secondary" size="large" />
+            </div>
+        </div>
+
+    </div>
+
+</header>
