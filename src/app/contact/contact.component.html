@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-center align-items-center"
+    style="flex-direction: column; min-height: 80vh;">
+    <div class="text-center mb-4">
+        <h1 class="display-4 fw-bold text-onyx">Contact Us</h1>
+    </div>
+    <div class="row justify-content-center w-100" style="padding: 30px;
+    gap: 20px;">
+        <div class="col-lg-5 col-md-6 mb-4 order-1 order-md-1">
+            <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="alertModalLabel">Notification</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ modalMessage }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <input type="text" class="form-control form-control-lg" placeholder="Name" formControlName="name">
+                    <div *ngIf="formSubmitted && f['name'].invalid" class="text-danger">Name is required.</div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <input type="email" class="form-control form-control-lg" placeholder="Email" formControlName="email">
+                    <div *ngIf="formSubmitted && f['email'].invalid" class="text-danger">Valid email is required.</div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <span class="input-group-text">+61</span>
+                     <input type="text" class="form-control form-control-lg" id="phone" placeholder="Phone" 
+                   formControlName="phone" (input)="applyMask($event)" maxlength="11">
+                    </div>
+                  </div>
+                  
+                  
+                  <div class="mb-3">
+                    <input type="text" class="form-control form-control-lg" placeholder="Subject" formControlName="subject">
+                    <div *ngIf="formSubmitted && f['subject'].invalid" class="text-danger">Subject is required.</div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <textarea class="form-control form-control-lg" rows="4" placeholder="Message" formControlName="message"></textarea>
+                    <div *ngIf="formSubmitted && f['message'].invalid" class="text-danger">Message is required.</div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <button type="submit" class="btn btn-dark btn-lg w-100">Submit Now</button>
+                  </div>
+                  
+            </form>
+
+        </div>
+
+        <div class="col-lg-5 col-md-6 mb-4 order-2 order-md-2">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3 text-onyx">
+                            <i class="fa fa-map  me-3 fs-3"></i>
+                            <p class="mb-0 fs-5">533-555 High St, Melton West VIC 3337</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa fa-map text-onyx me-3 fs-3"></i>
+                            <p class="mb-0 fs-5">1099/1169 Pascoe Vale Rd, Broadmeadows VIC 3047</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa fa-envelope text-onyx me-3 fs-3"></i>
+                            <a href="mailto:info&#64;eurekalogistics.com.au"
+                                class="text-onyx text-decoration-none fs-5">info&#64;onyxnthings.com.au</a>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa fa-phone text-onyx me-3 fs-3"></i>
+                            <a href="tel:0399588703" class="text-onyx text-decoration-none fs-5">+61 400 994 144</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+</div>
+
+<div style="background-image: url('assets/background.jpg');
+background-size: cover;
+background-position: center;
+filter: grayscale(100%);
+height: 100vh;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+z-index: -1;    opacity: 0.4;"></div>

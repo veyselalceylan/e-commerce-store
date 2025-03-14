@@ -1,0 +1,75 @@
+<div style="margin-top: 15vh; margin-bottom: 15vh;">
+    <div class="container mt-5" *ngIf="errorPage">
+        <div class="container py-5">
+            <div class="text-center"
+                style="background: radial-gradient(50% 109137.91% at 50% 50%, rgba(233, 30, 99, 0.1) 0%, rgba(254, 244, 247, 0) 100%);">
+                <span class="bg-white text-pink-500 font-weight-bold display-4 px-3">404</span>
+            </div>
+            <div class="mt-4 mb-3 font-weight-bold display-1 text-dark text-center">Page Not Found</div>
+            <p class="text-muted display-6 mt-0 mb-4 text-center">Sorry, we couldn't find the page.</p>
+            <div class="text-center">
+                <p-button label="Continue Shopping" [text]="true" [raised]="true" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="container mt-5" *ngIf="paymentFailedPage">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center" style="padding: 30px;">
+                            <h2 class="text-danger mb-4">
+                                <i class="bi bi-x-circle"></i> Payment Failed
+                            </h2>
+                            <p class="text-muted" style="font-size: 16px;">Unfortunately, there was an issue with your
+                                payment.</p>
+                            <p class="mb-4" style="font-size: 16px;">Please try again or contact customer support for
+                                assistance.</p>
+                            <p class="mb-4" style="font-size: 16px;">Order Number</p>
+                            <p class="mb-4" style="font-size: 16px;">{{orderNumber}}</p>
+                            <div class="d-flex justify-content-center">
+                                <a href="/check-out" class="btn btn-danger mx-2" style="padding: 10px; font-size: 16px;">
+                                    <i class="bi bi-arrow-left-circle"></i> Retry Payment
+                                </a>
+                                <a href="/contact-us" class="btn btn-primary mx-2" style="padding: 10px; font-size: 16px;">
+                                    <i class="bi bi-envelope-fill"></i> Contact Support
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    
+    
+    <div class="container mt-5" *ngIf="successPage">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center" style="padding: 30px;">
+                            <h2 class="text-success mb-4">
+                                <i class="bi bi-check-circle"></i> Payment Successful
+                            </h2>
+                            <p class="text-muted" style="font-size: 16px;">Thank you for your purchase! Your order has been
+                                successfully processed.</p>
+                            <p class="mb-4" style="font-size: 16px;">You will receive a confirmation email shortly with your
+                                order details.</p>
+                            <p class="mb-4" style="font-size: 16px;">Order Number</p>
+                            <p class="mb-4" style="font-size: 16px;">{{orderNumber}}</p>
+                            <div class="d-flex justify-content-center">
+                                <a href="/home" class="btn btn-success mx-2" style="padding: 10px; font-size: 16px;">
+                                    <i class="pi pi-shopping-cart"></i> Continue Shopping
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</div>

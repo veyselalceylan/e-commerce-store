@@ -1,0 +1,323 @@
+<p-toast />
+<p-confirmPopup />
+<div class="container" style="height: 100%;margin-top: 20px;display: flex;
+align-items: center;justify-content: center;flex-direction: column;gap: 20px;" *ngIf="isVerifyAccount">
+    <i class="pi pi-envelope" style="font-size: 120px;color: #c9c9c9;"></i>
+    <span class="verify-text">You Must Need Verify Your Mail</span>
+    <p-button label="Sent Verify Mail" [outlined]="true" (onClick)="sendVerificationEmail()" />
+</div>
+<div class="container" style="height: 100%; margin-top: 20px;" *ngIf="!isVerifyAccount">
+    <div class="row" style="display: flex;flex-direction: column;align-items: center;justify-content: center; gap:10px">
+        <div class="col-12" style="display: flex;align-items: flex-start; gap: 10px;" class="menu">
+            <div class="card text-center" style="width: 100%; max-height: 600px;">
+                <div class="card-header" style="font-size: 16px;font-weight: 600;">
+                    Profile Details
+                </div>
+                <div class="card-body">
+                    <ul class="list-group" style="font-size: 14px;">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span *ngIf="editField !== 'phone'; else editPhone">Phone Number
+                                <strong>{{ profile.phone}}</strong>
+                            </span>
+                            <ng-template #editPhone>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">+61</span>
+                                    <input [(ngModel)]="profile.phone" class="form-control"
+                                        placeholder="Phone Number" />
+                                </div>
+                            </ng-template>
+                            <div style="margin-left: 20px; display: flex;">
+                                <a style="text-decoration: none;
+                                color: brown;
+                                align-self: end;
+                                margin-right: 10px;" *ngIf="!currentUser?.phoneNumber && editField !== 'phone';">Enter
+                                    Your Phone Number</a>
+                                <button *ngIf="editField === 'phone'; else editButtonPhone" class="btn btn-dark btn-sm"
+                                    (click)="save('phone')">Save</button>
+                                <ng-template #editButtonPhone>
+                                    <div (click)="edit('phone')">
+                                        <i class="fas fa-edit edit-icon"></i>
+                                    </div>
+
+                                </ng-template>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span *ngIf="editField !== 'email'; else editEmail">E-mail <strong>{{ profile.email
+                                    }}</strong></span>
+                            <ng-template #editEmail>
+                                <input [(ngModel)]="profile.email" class="form-control" placeholder="E-posta" />
+                            </ng-template>
+                            <div style="margin-left: 20px; display: flex;">
+                                <a (click)="sendVerificationEmail()" style="text-decoration: none;
+                                color: rgb(42, 165, 69);
+                                align-self: end;
+                                margin-right: 10px;" *ngIf="!currentUser?.emailVerified">E-mail Verified</a>
+                                <a style="text-decoration: none;
+                                color: brown;
+                                align-self: end;
+                                margin-right: 10px;" *ngIf="showEmailVerify">Verify has been sent</a>
+                                <a style="text-decoration: none;
+                                color: brown;
+                                align-self: end;
+                                margin-right: 10px;" *ngIf="showEmailVerifyError">Verify hasn't been sent</a>
+                                <button *ngIf="editField === 'email'; else editButtonEmail" class="btn btn-dark btn-sm"
+                                    (click)="save('email')">Save</button>
+                                <ng-template #editButtonEmail>
+                                    <div (click)="edit('email')">
+                                        <i class="fas fa-edit edit-icon"></i>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span *ngIf="editField !== 'password'; else editPassword">Password
+                                <strong>********</strong></span>
+                            <ng-template #editPassword>
+                                <input [(ngModel)]="profile.password" class="form-control" placeholder="Password"
+                                    type="password" />
+                            </ng-template>
+                            <div style="margin-left: 20px;">
+                                <button *ngIf="editField === 'password'; else editButtonPassword"
+                                    class="btn btn-dark btn-sm" (click)="save('password')">Save</button>
+                                <ng-template #editButtonPassword>
+                                    <div (click)="edit('password')">
+                                        <i class="fas fa-edit edit-icon"></i>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="card-footer text-muted">
+
+                </div>
+            </div>
+            <div class="card text-center" style="width: 100%; max-height: 300px;">
+                <div class="card-header"
+                    style="font-size: 16px;font-weight: 600;display: flex;align-items: center;justify-content: space-between;">
+
+                    Addresses
+                    <div style="    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                    align-items: center;
+                    justify-content: flex-end;
+                    align-self: end;
+                    width: 100%;"  *ngIf="!isAddressExists('home') && !isAddressExists('work')">
+                        <i class="fas fa-plus " (click)="openModal()" data-bs-toggle="modal"
+                            data-bs-target="#addressModal"></i>Add
+                    </div>
+                </div>
+                <div class="card-body" style="padding: 0px;overflow: auto;">
+                    <div class="container" style="padding: 0px;">
+                        <div *ngIf="!currentUser?.addresses">Address doesn't exist</div>
+                        <div *ngIf="currentUser?.addresses">
+                            <div class="list-group" *ngFor="let result of userAddresses">
+                                <a class="list-group-item list-group-item-action list-group-item-light d-flex align-items-center justify-content-between"
+                                    style="cursor: pointer;">
+                                    <div class="d-flex align-items-center">
+                                        <span class="three-dots">...</span>
+                                        <div style="display: flex;flex-direction: column;align-items: flex-start;">
+                                            <span class="text-start ms-2" style="font-size: 14px; font-weight: 600;">{{
+                                                result.addressname }}</span>
+                                            <span class="text-start ms-2">{{ result.formatted }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="action-buttons">
+                                        <p-button (click)="openModal(result)" data-bs-toggle="modal"
+                                            data-bs-target="#addressModal" label="Edit" [text]="true"
+                                            severity="secondary" />
+                                        <p-button (click)="deleteAddress($event,result)" label="Delete" [text]="true"
+                                            severity="danger" />
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12" style="display: flex;flex-direction: column;align-items: flex-start;">
+            <div class="card text-center" style="width: 100%; max-height: 600px;">
+                <div class="card-header" style="font-size: 16px;font-weight: 600;">
+                    Orders
+                </div>
+                <div class="card-body" style="padding:0px;overflow: auto;">
+                    <p-table [value]="orders" [responsive]="true" class="p-datatable-striped">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Products</th>
+                                <th>Product Code</th>
+                                <th>Note</th>
+                                <th>Description</th>
+                                <th>Size</th>
+                                <th>Payment Method</th>
+                                <th>Total Price</th>
+                                <th>Payment Status</th>
+                                <th>Shipping Status</th>
+                                <th>Shipping Address</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-order>
+                            <tr>
+                                <td>
+                                    <img src="{{ order.products[0].productImageUrl }}" style="max-width: 50px;">
+                                </td>
+                                <td>{{ order.products[0].code }}</td>
+                                <td>{{ order.products[0].note }}</td>
+                                <td>{{ order.products[0].description }}</td>
+                                <td class="text-center">
+                                    <p-tag [value]="order.products[0].selectedTag"
+                                        [severity]="getSizeSeverity(order.products[0].selectedTag)">
+                                    </p-tag>
+                                </td>
+                                <td>
+                                    <div *ngIf="order.paymentDetail.method === 'afterpay'" class="afterpay">
+                                        <img src="assets/afterpay.png" alt="Afterpay Logo" style="height: 25px;" />
+                                    </div>
+                                    <div *ngIf="order.paymentDetail.method === 'credit' || order.paymentDetail.method === 'card'" class="credit">
+                                        <img src="assets/visa_master.png" alt="Card Logo"
+                                            style="height: 25px;" />
+                                    </div>
+                                    <div *ngIf="order.paymentDetail.method === 'paypal'" class="paypal">
+                                        <img src="assets/paypal.png" alt="Paypal Logo" style="height: 25px;" />
+                                    </div>
+                                </td>
+                                <td>{{ order.totalPrice | currency }}</td>
+                                <td class="text-center"><p-tag [value]="order.status"
+                                        [severity]="getPaymentSeverity(order.status)"></p-tag></td>
+                                <td class="text-center"><p-tag [value]="order.paymentDetail.shippingStatus"
+                                        [severity]="getShippingSeverity(order.paymentDetail.shippingStatus)"></p-tag>
+                                </td>
+                                <td>{{ order.paymentDetail.shipping.line1 }}, {{ order.paymentDetail.shipping.city }},
+                                    {{ order.paymentDetail.shipping.state }} {{
+                                    order.paymentDetail.shipping.postal_code}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+                </div>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div *ngIf="loading" style="background-image: url('assets/background.jpg');
+filter: grayscale(100%);
+height: 100vh;
+position: absolute;
+top: 0; display: flex; justify-content: center; align-items: center;
+left: 0;
+width: 100%;
+z-index: 99999999999;
+opacity: 1;">
+    <div style="display: flex; align-items: center; justify-content: center;">
+        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true"
+    style="margin-top: 100px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addressModalLabel">{{ mode === 'create' ? 'Add Address' : 'Edit Address' }}
+                </h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="addressInput" class="form-label">Search Address</label>
+                        <input type="text" id="searchInput" placeholder="Adres girin..." (input)="onSearch($event)"
+                            class="form-control">
+                    </div>
+                    <div *ngIf="addressResult.length > 0">
+                        <label class="form-group mb-2">Search Results</label>
+                        <div class="list-group" *ngFor="let result of addressResult" (click)="onResultClick(result)">
+                            <a class="list-group-item list-group-item-action list-group-item-light "
+                                style="cursor: pointer;">
+                                {{ result.properties.address_line1 }}, {{ result.properties.address_line2 }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Form Bölümü -->
+                    <div *ngIf="selectedResult">
+                        <label class="form-label  mb-3" style="font-weight: 600; font-size: 14px;">Address
+                            Details</label>
+                        <form [formGroup]="addressForm">
+                            <div class="form-group mb-2">
+                                <label for="addressname">Address Name</label>
+                                <select id="addressname" formControlName="addressname" class="form-control">
+                                    <option value="home" selected>Home</option>
+                                    <option value="work">Work</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="housenumber">Building Number</label>
+                                <input id="housenumber" formControlName="housenumber" type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="street">Street</label>
+                                <input id="street" formControlName="street" type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="district">District</label>
+                                <input id="district" formControlName="district" type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="city">City</label>
+                                <input id="city" formControlName="city" type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="state_code">State Code</label>
+                                <input id="state_code" formControlName="state_code" type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="postcode">Postcode</label>
+                                <input id="postcode" formControlName="postcode" type="text" class="form-control"
+                                    readonly>
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="country">Country</label>
+                                <input id="country" formControlName="country" type="text" class="form-control" readonly>
+                            </div>
+                            <div class="form-group mb-2" style="display: none;">
+                                <label for="formatted">Country</label>
+                                <input id="formatted" formControlName="formatted" type="text" class="form-control"
+                                    readonly>
+                            </div>
+                        </form>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark" id="closeModal" (click)="saveAddress()">
+                    {{ mode === 'create' ? 'Create Address' : 'Update Address' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

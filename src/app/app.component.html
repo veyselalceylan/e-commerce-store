@@ -1,0 +1,25 @@
+<div class="main" style="display: flex; flex-direction: column; justify-content: space-between;" *ngIf="loadApp">
+  <app-navbar (toggleSidebarEvent)="toggleSidebar()" (toogleShoppingChartEvent)="toogleShoppingChart()"
+    (searchInputChanged)="onSearchInputChanged($event)" class="navbar"
+    style="top: 0; left: 0; right: 0; z-index: 1000;"></app-navbar>
+  <app-sidebar [sidebarOpened]="sidebarOpened"></app-sidebar>
+  <div class="windows" style="height: 100vh;">
+    <!--reklam icin popup-->
+    <app-popup-ad></app-popup-ad>
+    <app-shopping-popup class="shoppingChart" [shoppingChartOpened]="shoppingChartOpened"
+      (shoppingChartToggle)="updateShoppingChartOpened($event)"></app-shopping-popup>
+    <div class="overlay" *ngIf="shoppingChartOpened"></div>
+    <app-search-result *ngIf="searchQuery" [query]="searchQuery"></app-search-result>
+    <router-outlet *ngIf="!searchQuery" class="ml-[12rem] mr-[12rem]"></router-outlet>
+    <app-footer class="footer"></app-footer>
+  </div>
+</div>
+
+<div *ngIf="!loadApp" style="position: absolute;top: 0;bottom: 0;right: 0;left: 0;z-index: 9999999;
+display: flex;align-items: center;justify-content: center;background-color: #ffffffad; flex-direction: column;
+gap:20px">
+  <h1>ONYXNTHINGS</h1>
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+        animationDuration=".5s" />
+        <h3>Loading...</h3>
+</div>

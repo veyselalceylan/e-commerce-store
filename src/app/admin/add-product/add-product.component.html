@@ -1,0 +1,154 @@
+<div class="flex h-full items-center justify-center">
+    <p-toast />
+    <p-confirmDialog />
+
+    <div class="card  bg-white shadow-lg rounded-lg">
+        <div class="card" *ngIf="isSaved" style="padding: 1rem !important"><p-progressBar mode="indeterminate"
+                [style]="{ height: '6px' }" /></div>
+        <p-stepper>
+            <p-stepperPanel header="Product Information">
+                <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+                    <form [formGroup]="form" class="w-full shadow-md rounded-lg bg-white p-4">
+                        <div class="field">
+                            <label for="small"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Main
+                                Category
+                                <strong>*required</strong>
+                            </label>
+                            <select id="small" formControlName="mainCategory"
+                                class="block w-full p-2 mb-3 
+                            bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="" disabled selected>Choose a category</option>
+                                <option *ngFor="let category of datamainCategory" [value]="category.code">{{
+                                    category.name
+                                    }}</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="secondCategory"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Product Second Category <strong>*required</strong>
+                            </label>
+                            <select id="secondCategory"
+                                class="block w-full p-2 mb-3 
+                            bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                formControlName="secondCategory">
+                                <option value="" disabled selected>Select a Second Category</option>
+                                <option *ngFor="let subOption of subOptions" [value]="subOption.code">{{ subOption.name
+                                    }}</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="productName"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Name
+                                <strong>*required</strong>
+                            </label>
+                            <input id="productName" formControlName="productName" placeholder="Product Name" class="block w-full p-2 mb-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
+                                          focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <div class="field">
+                            <label for="productCode"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Code
+                                <strong>*required</strong>
+                            </label>
+                            <input id="productCode" formControlName="productCode" placeholder="Product Code" class="block w-full p-2 mb-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
+                                          focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 
+                                          dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+                                          dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </div>
+
+                        <div class="field">
+                            <label for="productMainDescription"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Main
+                                Description
+                                <strong>*required</strong>
+                            </label>
+                            <textarea id="productMainDescription" formControlName="productMainDescription"
+                                placeholder="Product Main Description" class="block w-full p-2 mb-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
+                                          focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 
+                                          dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+                                          dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                        </div>
+
+                        <div class="field">
+                            <label for="productSecondDescription"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Second
+                                Description
+                                <strong>*required</strong>
+                            </label>
+                            <textarea id="productSecondDescription" formControlName="productSecondDescription"
+                                placeholder="Product Second Description" class="block w-full p-2 mb-3 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
+                                          focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 
+                                          dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+                                          dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                        </div>
+
+                    </form>
+                    <div class="flex pt-4 justify-between">
+                        <p-button label="Back" icon="pi pi-arrow-left" iconPos="left" class="p-button-text"
+                            routerLink="/admin" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 
+                                focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 
+                                py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"></p-button>
+
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" class="py-2.5 px-5 me-2 mb-2 
+                        text-sm font-medium text-gray-900 focus:outline-none 
+                        bg-white rounded-lg border border-gray-200 hover:bg-gray-100 
+                        hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 
+                        dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 
+                        dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                            (onClick)="nextCallback.emit()"></p-button>
+                    </div>
+                    <div class="flex pt-4 justify-end">
+
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Product Photos">
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+                    let-index="index">
+                    <label for="dropzone-file"
+                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
+                                    to upload</span> or drag and drop</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)
+                            </p>
+                        </div>
+                        <input id="dropzone-file" (change)="onFileChange($event)" type="file" multiple class="hidden" />
+                    </label>
+
+                    <div *ngFor="let image of images"
+                        class="flex items-center justify-between p-2 border-b border-gray-300">
+                        <div class="flex items-center">
+                            <img [src]="image" width="50" class="rounded" alt="Uploaded Image">
+                        </div>
+                        <div>
+                            <button type="button" (click)="removeImage(image)"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                <i class="pi pi-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex pt-4 justify-between">
+                        <p-button  label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 
+                        focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 
+                        py-2.5 me-2 mb-2 dark:focus:ring-yellow-900" />
+                        <p-button label="Next" icon="pi pi-arrow-right" [disabled]="!isFormValid" icon="pi pi-save"
+                            (onClick)="save($event)" class="focus:outline-none text-white 
+                            bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 
+                            font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 
+                            dark:hover:bg-green-700 dark:focus:ring-green-800" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+        </p-stepper>
+    </div>
+</div>

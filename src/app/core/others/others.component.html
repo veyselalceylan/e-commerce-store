@@ -1,0 +1,41 @@
+<div class="container" style="margin-top: 20px;padding-inline: 0px;">
+    <div id="content" class="my-2" style="display: flex;">
+        <div id="products" style="width: 100%;">
+            <div class="line-with-text"
+                style="margin-inline: 10px; justify-content: space-between; margin-top: 5px; margin-bottom: 10px; display: flex; align-items: center;">
+                <div class="select">
+                    <label>
+                        <select  class="form-select" style="font-size: 1rem;" (change)="onSelectChange($event)">
+                            <option value="/other">All Other Models</option>
+                            <option value="/other/married">Wedding Models</option>
+                            <option value="/other/school">School Models</option>
+                            <option value="/other/lover">Lover Models</option>
+                            <option value="/other/family">Family Models</option>
+                          </select>     
+                    </label>
+                </div>
+                <div class="modelList">
+                    <a routerLink="/other" style="margin: 0px;" class="line-text">All Other Models</a>
+                    <a routerLink="/other/married" class="line-text">Wedding Models</a>
+                    <a routerLink="/other/school" class="line-text">School Models</a>
+                    <a routerLink="/other/lover" class="line-text" >Lover Models</a>
+                    <a routerLink="/other/family" class="line-text" >Family Models</a>
+                </div>
+                <div style="display: flex;flex-direction: row;width: 50%;justify-content:end;">
+                    <label>
+                        <select class="form-select" style="font-size: 1rem;margin: 0px 20px;"(change)="onSortChange($event)">
+                            <option value="none">Recommended</option>
+                            <option value="asc">High to Low</option>
+                            <option value="decs">Low to High</option>
+                            <option value="A-Z">Name (A-Z)</option>
+                            <option value="Z-A">Name (Z-A)</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="router">
+                <router-outlet style="padding-inline: 0px;"></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

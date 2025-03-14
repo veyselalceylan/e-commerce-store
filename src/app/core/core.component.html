@@ -1,0 +1,139 @@
+
+<div class="container-fluid main" style="padding: 0px;">
+    <div class="d-flex h-100 text-white position-relative"
+        style="background-position: center; background-image: url({{pagePerference.image}}); background-size: cover;">
+
+        <!-- Siyah Perde -->
+        <div class="overlay"></div>
+
+        <!-- İçerik -->
+        <div class="container content position-absolute bottom-0 start-0 p-3 ms-3 mb-3">
+            <div class="row w-100">
+                <div class="col-12">
+                    <h1 class="text-start fw-normal fw-bold-lg">{{pagePerference.title1}}</h1>
+                </div>
+                <div class="col-12">
+                    <h1 class="text-start fw-normal fw-bold-lg">{{pagePerference.title2}}</h1>
+                </div>
+                <div class="col-12">
+                    <p class="h5 text-start fw-normal">{{pagePerference.title3}}</p>
+                    <p class="h5 text-start fw-normal">{{pagePerference.title4}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="py-5" style="margin-inline: 30px;">
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="text-dark fs-4 fw-medium mb-4 text-center text-lg-start" style="padding-inline: 30px;">Top Picks
+                for You</div>
+
+            <p-carousel [value]="filteredProducts" [numVisible]="8" [numScroll]="4"
+                [responsiveOptions]="responsiveOptions">
+                <ng-template let-product pTemplate="item">
+                    <div class="border border-1 rounded m-2 p-3" style="border-color: #e0e0e0;">
+                        <div class="mb-3" (click)="getData(product)">
+                            <div class="relative mx-auto">
+                                <img src="{{product.imageUrl}}" [alt]="product.code" style="height: 120px"
+                                    class="w-full border-round" />
+                            </div>
+                        </div>
+                        <div class="mb-3 font-medium" style="font-size: 18px;">
+                            {{ product.name }}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mt-0 font-semibold text-xl">
+                                <div>
+                                    <span
+                                        style="padding: 0px; text-decoration: line-through; font-size: 14px; font-weight: 600; color: #707070">${{product.oldPrice}}</span>
+                                    <span
+                                        style="margin-left:10px; padding: 0px; font-size: 16px; font-weight: 600; color: #4665bf">${{product.price}}</span>
+                                </div>
+                            </div>
+                            <span>
+                                <p-button icon="pi pi-shopping-cart" [ngStyle]="{'width':'100%'}" [raised]="true"
+                                    (click)="addChart(product)"></p-button>
+                            </span>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </div>
+    </div>
+</div>
+
+<div style="margin-inline: 30px; margin-bottom: 30px;">
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="text-dark fs-4 fw-medium mb-4 text-center text-lg-start" style="padding-inline: 30px;">How We
+                Make It?</div>
+            <div class="main-text">
+                <!-- Text Section -->
+                <div class="text-section" style="display: flex;flex-direction: column;">
+                    <div class="step-container">
+                        <div class="step-number">1</div>
+                        <div style="margin-left: 20px; display: flex; flex-direction: column; align-items: flex-start;">
+                            <h4 class="step-title">PLACE YOUR ORDER</h4>
+                            <p class="step-description">
+                                Purchase and upload your image and info via Checkout page.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="step-container">
+                        <div class="step-number">2</div>
+                        <div style="margin-left: 20px; display: flex; flex-direction: column; align-items: flex-start;">
+                            <h4 class="step-title">UPLOAD YOUR PHOTO</h4>
+                            <p class="step-description">
+                                Upload a well-lit photo with a maximum size of 50 MB, ensuring that all facial features
+                                of the person are clearly visible.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="step-container">
+                        <div class="step-number">3</div>
+                        <div style="margin-left: 20px; display: flex; flex-direction: column; align-items: flex-start;">
+                            <h4 class="step-title">APPROVE YOUR ART</h4>
+                            <p class="step-description">
+                                In addition to the portrait style you have selected, you will receive four additional
+                                unique designs. Download a 300dpi PDF or PNG file with a maximum size of 24x36 inches.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="step-container">
+                        <div class="step-number">4</div>
+                        <div style="margin-left: 20px; display: flex; flex-direction: column; align-items: flex-start;">
+                            <h4 class="step-title">CHECK YOUR ORDER STATUS</h4>
+                            <p class="step-description">
+                                Track the progress of your order and ensure everything is on schedule.
+                                You will be notified once your design is ready for download.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="step-container">
+                        <div class="step-number">5</div>
+                        <div style="margin-left: 20px; display: flex; flex-direction: column; align-items: flex-start;">
+                            <h4 class="step-title">CREATE YOUR CUSTOM DESIGN</h4>
+                            <p class="step-description">
+                                Transform your unique ideas into reality! Send us your custom design, and we can turn it
+                                into personalized figurines, framed artworks, or other bespoke products tailored just
+                                for you.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Section -->
+                <div class="image-section">
+                    <img src="assets/howwemakeithome.webp" alt="Example">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

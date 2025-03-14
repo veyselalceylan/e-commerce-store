@@ -1,0 +1,61 @@
+<div style="display: flex; width: 100%; align-items: center; justify-content: center;height: 70vh;" *ngIf="loading">
+    <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+</div>
+<div style="display: flex; flex-wrap: wrap;" *ngIf="!loading">
+    <div class="col-12 col-sm-6 col-lg-3 product-card item"
+        style="padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 1rem; padding-right: 0.5rem;"
+        *ngFor="let product of filteredProducts">
+        <p-card>
+            <ng-template pTemplate="header">
+                <div (click)="getData(product)" style="position: relative;
+                overflow: hidden;">
+                    <div style="position: absolute;
+                    background-color: #5fa081;
+                    padding: 5px;
+                    color: white;
+                    font-size: 14px;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+                    border-bottom-right-radius: 20px;padding-right: 10px;">
+                        {{calculateDiscount(product.oldPrice, product.price).toFixed(0)}}% Off
+                    </div>
+                    <div *ngIf="!product.imageValid"
+                        style="max-height: 300px; min-height: 300px; object-fit: scale-down; display: flex; align-items: center; justify-content: center;">
+                        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+                    </div>
+                    <img *ngIf="product.imageValid"
+                        style="object-fit: scale-down; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);"
+                        class="shadow-sm p-3 bg-body rounded" alt="Card" src="{{product.imageUrl}}"
+                        (load)="onImageLoad($event)" (error)="onImageError(product)" />
+                </div>
+
+            </ng-template>
+            <div (click)="getData(product)"
+                style="width: 100%; display: flex; flex-direction: row; justify-content: space-between;">
+                <div style="display: flex; flex-direction: column; align-items: start; margin-bottom: 10px;">
+                    <p style="margin-bottom: 0.5rem; font-size: 16px; font-weight: 600; color: #4665bf">{{product.name}}
+                    </p>
+                </div>
+                <div style="display: flex;flex-direction: column-reverse; align-items: flex-end;">
+                    <span
+                        style="padding: 0px; text-decoration: line-through; font-size: 14px; font-weight: 600; color: #707070">${{product.oldPrice}}</span>
+                    <span
+                        style="padding: 0px; font-size: 16px; font-weight: 600; color: #4665bf">${{product.price}}</span>
+                </div>
+            </div>
+            <ng-template pTemplate="footer">
+                <div class="flex gap-3" style="display: flex; justify-content: space-between; width: 100%;">
+                    <!-- <p-button icon="pi pi-heart" label="Like" [rounded]="true" [text]="true" [raised]="true"
+                        severity="help"></p-button> -->
+                    <p-button icon="pi pi-shopping-cart" label="Add to Cart" [rounded]="true" [text]="true"
+                        [ngStyle]="{'width':'100%'}" [raised]="true" severity="info"
+                        (click)="addChart(product)"></p-button>
+                </div>
+            </ng-template>
+        </p-card>
+    </div>
+</div>
+
+<div (click)="loadMore()" *ngIf="!loading" style=" width: 100%; display: flex; justify-content: center;">
+    <p-button label="Load More" [rounded]="true" [text]="true" [raised]="true" severity="secondary"></p-button>
+</div>

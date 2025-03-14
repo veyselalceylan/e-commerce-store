@@ -1,0 +1,121 @@
+.three-dots {
+  display: flex;
+  flex-direction: column;
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.action-buttons {
+  display: flex;
+}
+
+:host {
+  ::deep .p-datatable .p-datatable-tbody>tr>td {
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    border-width: 0 0 1px 0;
+    padding: 1rem 1rem;
+  }
+}
+:host{
+  ::deep .p-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    font-size: 12px;
+  }
+}
+.no-bullets {
+  list-style-type: none;
+  padding-left: 0;
+}
+.btn{
+  background-color: #4665bf;
+  border: 1px solid #4665bf;
+  color: white;
+}
+@media (max-width: 1400px) {
+  .menu {
+    flex-direction: column;
+  }
+
+  .verify-text {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .verify-text {
+    font-size: 36px;
+  }
+}
+
+
+.paypal-button {
+  background-color: rgb(255, 196, 57);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, cursor 0.3s ease;
+}
+
+.paypal {
+  background-color: rgb(255, 196, 57);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, cursor 0.3s ease;
+}
+
+.paypal img {
+  height: 20px;
+  margin-left: -35px;
+}
+
+.paypal-button img {
+  height: 20px;
+  margin-right: 10px;
+}
+
+.paypal-button:hover {
+  background-color: rgb(255, 173, 32);
+  cursor: pointer;
+}
+
+.afterpay-button {
+  background-color: rgb(178 252 229);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, cursor 0.3s ease;
+}
+
+.afterpay {
+  background-color: rgb(178 252 229);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.afterpay-button img {
+  height: 20px;
+  margin-right: 10px;
+}
+
+.afterpay-button:hover {
+  background-color: rgb(140, 200, 180);
+  cursor: pointer;
+}

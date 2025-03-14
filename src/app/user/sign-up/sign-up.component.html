@@ -1,0 +1,56 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card card-width shadow" >
+        <div class="card-body p-5">
+            <h6 class="text-center card-title mb-5" style="font-size: 20px;">ONYX'N'THINGS</h6>
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" formControlName="email" id="email" 
+                        class="form-control form-control-lg" placeholder="name@company.com" required />
+                </div>
+                <div class="mb-3 position-relative">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
+                        id="password" placeholder="••••••••" class="form-control form-control-lg" required />
+                    <i class="bi bi-eye position-absolute" (click)="togglePasswordVisibility()"
+                       [ngClass]="{'text-secondary': !passwordVisible, 'text-primary': passwordVisible}" 
+                       style="cursor: pointer; right: 10px; top: 35px;"></i>
+                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="Password must be at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number."
+                       style="cursor: pointer; position: absolute; right: 40px; top: 35px;"></i>
+                    <small class="form-text text-muted">
+                        Click the info icon for password requirements.
+                    </small>
+                </div>
+                <div class="mb-3 position-relative">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" [type]="confirmPasswordVisible ? 'text' : 'password'" 
+                        formControlName="confirmPassword" id="confirmPassword" placeholder="••••••••" 
+                        class="form-control form-control-lg" required />
+                    <i class="bi bi-eye position-absolute" (click)="toggleConfirmPasswordVisibility()"
+                       [ngClass]="{'text-secondary': !confirmPasswordVisible, 'text-primary': confirmPasswordVisible}" 
+                       style="cursor: pointer; right: 10px; top: 35px;"></i>
+                </div>
+                <div *ngIf="errorMailMessage" class="alert alert-danger" role="alert">
+                    {{ errorMailMessage }}
+                </div>
+                <div *ngIf="showPasswordMismatch" class="alert alert-danger" role="alert">
+                    Passwords do not match!
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a routerLink="/forgot-password" class="text-dark" style="margin-bottom: 10px;">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn btn-dark w-100 p-3" [disabled]="!signupForm.valid || showPasswordMismatch">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div style="background-image: url('assets/background.jpg');
+background-size: cover;
+background-position: center;
+filter: grayscale(100%);
+height: 100vh;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+z-index: -1;    opacity: 0.4;"></div>

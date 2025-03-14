@@ -1,0 +1,36 @@
+:host ::ng-deep .p-button{
+    font-size:20px;  
+  }
+  :host ::ng-deep .p-button .p-badge {
+    margin-left: 0rem;
+    min-width: 15px;
+    height: 15px;
+    align-items: center;
+    color: #ffffff;
+    background-color: #757ae9;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    background-color: #4665bf;
+  }
+.btn{
+  background-color: #4665bf;
+  border: 1px solid #4665bf;
+}
+  .open {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .closed {
+    display: none;
+    opacity: 0;
+  }
+  .popup-content {
+    overflow: hidden;
+  }
+  

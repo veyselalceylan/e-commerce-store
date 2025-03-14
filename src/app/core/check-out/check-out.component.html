@@ -1,0 +1,551 @@
+<div *ngIf="proccess" style="position: absolute;top: 0;bottom: 0;right: 0;left: 0;z-index: 9999999;
+display: flex;align-items: center;justify-content: center;background-color: #ffffffad;">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+        animationDuration=".5s" />
+</div>
+<div class="container mt-5" style="margin-bottom: 70px;">
+    <p-toast />
+    <p-confirmDialog />
+    <app-warning-popup></app-warning-popup>
+    <p-stepper [(activeStep)]="active">
+        <p-stepperPanel>
+            <ng-template pTemplate="header" let-index="index">
+                <div class="border stepper-header" [ngClass]="{
+                    'border-primary': index <= active,
+                    'border-secondary': index > active
+                }" [ngStyle]="{
+                    'background-color': index <= active ? '#0d6efd0f' : ''
+                }">
+                    <div style="margin-inline: 10px;">
+                        <i class="pi pi-id-card" [ngStyle]="{
+                            'color': index <= active ? '#326fd1' : 'gray'
+                        }" style="font-size: 32px"></i>
+                    </div>
+                    <div style="display: flex;flex-direction: column;    margin-inline: 10px;">
+                        <span style="font-size: 15px;font-weight: 600;" class="mb-1" [ngClass]="{
+                            'text-primary': index <= active,
+                            'text-secondary': index > active
+                        }">Customize</span>
+                        <span style="color:gray">Add Photo & Description</span>
+                    </div>
+                </div>
+                <div class="border stepper-header-mobile" [ngClass]="{
+                    'border-primary': index <= active,
+                    'border-secondary': index > active
+                }" [ngStyle]="{
+                    'background-color': index <= active ? '#0d6efd0f' : ''
+                }">
+                    <div style="display: flex;flex-direction: column;    margin-inline: 10px;">
+                        <span style="font-size: 15px;font-weight: 600;" class="mb-1" [ngClass]="{
+                            'text-primary': index <= active,
+                            'text-secondary': index > active
+                        }">Customize</span>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+                <div class="flex flex-column">
+                    <div class="d-flex flex-row justify-content-between col-12 card border rounded shadow-sm" style="padding: 10px; margin-bottom: 30px;">
+                        <p-button label=" Continue Shopping" routerLink="/home"
+                            icon="pi pi-arrow-left" iconPos="left" [text]="true" />
+                        <div
+                            class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
+                            <div class="col d-flex justify-content-end align-items-center login-text"
+                                *ngIf="!currentUser">
+                                <span class="text-muted mr-2" style="color: gray; font-size: 14px;">Already have an
+                                    account?</span>
+                                <a routerLink="/signin" style="margin-left: 10px;font-size: 14px;"
+                                    class="text-dark hover:text-primary transition-duration-150">Login</a>
+                            </div>
+                            <div class="col  d-flex justify-content-end align-items-center"
+                                *ngIf="currentUser">
+                                <span class="text-muted"
+                                    style="color: gray; font-size: 14px;">{{currentUser.email}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p-messages [(value)]="messages" [enableService]="false" />
+                    <div class="">
+                        <p-accordion>
+                            <p-accordionTab *ngFor="let product of shoppingCart; let i = index" [selected]="true">
+                                <ng-template pTemplate="header">
+                                    <!-- <div
+                                        style="padding: 5px; display: flex; align-items: center; color: #d98b8b; height: 120px; justify-content: center;">
+                                        <i class="pi pi-exclamation-circle"
+                                            style="font-size: 32px"></i>
+                                    </div> -->
+                                    <div
+                                        style="max-height: 120px; display: flex; align-items: center; justify-content: center; padding: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+                                        <img [src]="product.imageUrl" class="accordion-img">
+                                    </div>
+                                    <div
+                                        style="height: 120px; display: flex; flex-direction: column; padding-left: 20px; width: 100%; margin-top: 10px;">
+                                        <div
+                                            style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; color: #5f5f5f;">
+                                            <span style="font-weight: 900; font-size: medium;"> {{ product.name |
+                                                slice:0:8 }}{{ product.name.length > 10 ? '...' : '' }}</span>
+                                            <span style="font-weight: bold; font-size: medium;">${{product.price | number: '1.2-2' }}</span>
+                                        </div>
+                                        <div
+                                            style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; color: #808080;">
+                                            <span style="font-weight: 500; color: #808080;">You Need to Upload 
+                                                <span style="font-weight: 600; color: #db434b;">{{product.countOfPhotos}}</span> Photos
+                                            </span>
+                                            <span
+                                                style="font-weight: 600; color: #808080;">{{product.selectedTag}}, {{product.type}}</span>
+                                        </div>
+                                        <div
+                                            style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                                            <div
+                                                style="display: flex; align-items: center; border: 1px solid #d3d4d5; border-radius: 5px;">
+                                                <button type="button" (click)="decrementQuantity(product)"
+                                                    class="p-element p-button-icon-only p-button-text p-inputnumber-button p-inputnumber-button-down p-button p-component"
+                                                    style="border: none; padding: 0px;">
+                                                    <span class="pi pi-minus"></span>
+                                                </button>
+                                                <input pinputtext="" inputmode="decimal" min="0"
+                                                    [(ngModel)]="product.countOfProduct"
+                                                    class="p-inputtext p-component p-element text-center border-transparent"
+                                                    style="width: 3rem; height: 30px; padding: 10px; border: none; text-align: center; padding: 0px;background-color: #f9fafb;">
+                                                <button type="button" (click)="incrementQuantity(product)"
+                                                    class="p-element p-button-icon-only p-button-text p-inputnumber-button p-inputnumber-button-up p-button p-component"
+                                                    style="border: none; padding: 0px;">
+                                                    <span class="pi pi-plus"></span>
+                                                </button>
+                                            </div>
+                                            <p-button icon="pi pi-trash" (click)="removeProduct(product)"
+                                                [rounded]="true" [text]="true" [raised]="true"
+                                                severity="help"></p-button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <div>
+                                    <div class="p-fluid">
+                                        <label for="description{{i}}"
+                                            style="font-size: 14px;font-weight: 600;margin-bottom: 10px;">Write If You
+                                            Want Text On The Bottom</label>
+                                        <textarea rows="5" cols="30" style="margin-bottom: 14px;"
+                                            [(ngModel)]="product.description" id="description{{i}}" required
+                                            pInputTextarea></textarea>
+                                    </div>
+                                    <div class="p-fluid">
+                                        <label for="note{{i}}"
+                                            style="font-size: 14px;font-weight: 600;margin-bottom: 10px;">Note for
+                                            Merchant</label>
+                                        <textarea rows="5" cols="30" style="margin-bottom: 14px;"
+                                            [(ngModel)]="product.note" id="note{{i}}" required
+                                            pInputTextarea></textarea>
+                                    </div>
+                                    <div class="p-fluid">
+                                        <label
+                                            style="font-size: 14px;font-weight: 600;margin-bottom: 10px;">Photos</label>
+                                        <p-fileUpload name="files" customUpload="true" multiple="multiple"
+                                            accept="image/*" #fileUpload
+                                            (onSelect)="uploadFile(product, $event, i, fileUpload)"
+                                            required></p-fileUpload>
+                                    </div>
+                                    <div> <label
+                                            style="font-size: 14px;font-weight: 600;margin-bottom: 10px; margin-top: 10px;">Uploaded
+                                            Photos</label></div>
+                                    <div *ngIf="product.images && product.images.length > 0" class="uploaded-images"
+                                        style="margin-top: 10px;">
+                                        <div *ngFor="let image of product.images">
+                                            <div class="image-container">
+                                                <button type="button" style="position: absolute; top: 5px; right: 5px;"
+                                                    class="btn btn-lg btn-outline-danger">
+                                                    <i class="pi pi-times" (click)="deleteImage(product, image)"></i>
+                                                </button>
+                                                <img *ngIf="image.objectURL" [src]="image.objectURL"
+                                                    alt="Uploaded Image" class="uploaded-image" />
+                                                <div *ngIf="image.objectURL" class="image-name">{{
+                                                    image.file.name }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-accordionTab>
+
+                        </p-accordion>
+                    </div>
+
+                </div>
+                <div class="flex py-4">
+                    <p-button label="Next" (click)="onNextClick($event)" [disabled]="nextDisabled"></p-button>
+                </div>
+            </ng-template>
+        </p-stepperPanel>
+        <p-stepperPanel>
+            <ng-template pTemplate="header" let-index="index">
+                <div class="border stepper-header" [ngClass]="{
+                    'border-primary': index <= active,
+                    'border-secondary': index > active
+                }" [ngStyle]="{
+                    'background-color': index <= active ? '#0d6efd0f' : ''
+                }">
+                    <div style="margin-inline: 10px;">
+                        <i class="pi pi-credit-card" [ngStyle]="{
+                            'color': index <= active ? '#326fd1' : 'gray'
+                        }" style="font-size: 32px"></i>
+                    </div>
+                    <div style="display: flex;flex-direction: column;    margin-inline: 10px;">
+                        <span style="font-size: 15px;font-weight: 600;" class="mb-1" [ngClass]="{
+                            'text-primary': index <= active,
+                            'text-secondary': index > active
+                        }">Payment</span>
+                        <span style="color:gray">Card & Address Details</span>
+                    </div>
+                </div>
+                <div class="border stepper-header-mobile" [ngClass]="{
+                    'border-primary': index <= active,
+                    'border-secondary': index > active
+                }" [ngStyle]="{
+                    'background-color': index <= active ? '#0d6efd0f' : ''
+                }">
+                    <div style="display: flex;flex-direction: column;    margin-inline: 10px;">
+                        <span style="font-size: 15px;font-weight: 600;" class="mb-1" [ngClass]="{
+                            'text-primary': index <= active,
+                            'text-secondary': index > active
+                        }">Payment</span>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+                let-index="index">
+                <div class="stepper-payment-main">
+                    <div class="d-flex flex-row justify-content-between col-12 card border rounded shadow-sm" style="padding: 10px;">
+                        <p-button label=" Back"
+                            icon="pi pi-arrow-left" iconPos="left" [text]="true" (onClick)="prevCallback.emit()" />
+                        <div
+                            class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between">
+                            <div class="col d-flex justify-content-end align-items-center login-text"
+                                *ngIf="!currentUser">
+                                <span class="text-muted mr-2" style="color: gray; font-size: 14px;">Already have an
+                                    account?</span>
+                                <a routerLink="/signin" style="margin-left: 10px;font-size: 14px;"
+                                    class="text-dark hover:text-primary transition-duration-150">Login</a>
+                            </div>
+                            <div class="col  d-flex justify-content-end align-items-center"
+                                *ngIf="currentUser">
+                                <span class="text-muted"
+                                    style="color: gray; font-size: 14px;">{{currentUser.email}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-main-div">
+                        <div class="col-lg-8 col-12 card border rounded shadow-sm" style="padding:30px;  flex: 1;">
+                            <h4 style="margin-bottom: 20px;">Contact Information</h4>
+                            <form [formGroup]="contactForm">
+                                <div class="col-12 d-flex flex-column">
+                                    <label for="email" class="text-900 font-medium mb-3"
+                                        style="font-size: 14px;">Email</label>
+                                    <input id="email" pInputText type="email" formControlName="email" class="w-full"
+                                        [ngClass]="{ 'ng-invalid': contactForm.controls['email'].invalid && contactForm.controls['email'].touched }" />
+                                </div>
+                                <hr style="margin-bottom: 20px; margin-top: 20px;">
+                                <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between mb-3">
+                                    <h4>Shipping</h4>
+                                </div>
+                                <div class="d-flex flex-row mb-3" style="gap:10px">
+                                    <div class="col d-flex flex-column">
+                                        <label for="name" class="text-900 font-medium mb-3"
+                                            style="font-size: 14px">Name</label>
+                                        <input id="name" pInputText type="text" formControlName="name" class="w-full"
+                                            [ngClass]="{ 'ng-invalid': contactForm.controls['name'].invalid && contactForm.controls['name'].touched }" />
+                                    </div>
+                                    <div class="col d-flex flex-column">
+                                        <label for="surname" class="text-900 font-medium mb-3"
+                                            style="font-size: 14px;">Surname</label>
+                                        <input id="surname" pInputText type="text" formControlName="surname" class="w-full"
+                                            [ngClass]="{ 'ng-invalid': contactForm.controls['surname'].invalid && contactForm.controls['surname'].touched }" />
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-column mb-3">
+                                    <label for="phone" class="text-900 font-medium mb-3" style="font-size: 14px;">Phone
+                                        Number</label>
+                                    <p-inputMask mask="9999-999-999" placeholder="9999-999-999"
+                                        formControlName="phoneNumber"
+                                        [ngClass]="{ 'ng-invalid ng-dirty': contactForm.controls['phoneNumber'].invalid && contactForm.controls['phoneNumber'].touched }"></p-inputMask>
+                                </div>
+                                <div class="col-12 d-flex flex-column mb-3" *ngIf="currentUser">
+                                    <label for="phone" class="text-900 font-medium mb-3" style="font-size: 14px;">Address
+                                        Options</label>
+                                    <p-selectButton [options]="addressOption" optionLabel="label" optionValue="value"
+                                        (onOptionClick)="addressOptionChange($event)" />
+                                </div>
+                                <div class="col-12 d-flex flex-column mb-3" *ngIf="false">
+                                    <label for="addressSearch" class="text-900 font-medium mb-3"
+                                        style="font-size: 14px;">Address Search</label>
+                                    <input id="addressSearch" pInputText type="text" class="w-full"
+                                        (input)="onSearch($event)" />
+                                </div>
+                                <div *ngIf="false" class="mb-3">
+                                    <label class="text-900 font-medium mb-3">Search Results</label>
+                                    <div class="list-group" *ngFor="let result of addressResult"
+                                        (click)="onResultClick(result)">
+                                        <a class="list-group-item list-group-item-action list-group-item-light "
+                                            style="cursor: pointer;">
+                                            {{ result.properties.address_line1 }}, {{ result.properties.address_line2 }}
+                                        </a>
+                                    </div>
+                                </div>
+    
+                                <div *ngIf="addressForm">
+                                    <div class="col-12 d-flex flex-column mb-3">
+                                        <label for="address" class="text-900 font-medium mb-3"
+                                            style="font-size: 14px;">Street</label>
+                                        <input id="address" pInputText type="text" formControlName="address" class="w-full"
+                                            [ngClass]="{ 'ng-invalid': contactForm.controls['address'].invalid && contactForm.controls['address'].touched }" />
+                                    </div>
+                                    <div style="display: flex; flex-wrap: wrap; gap:10px">
+                                        <div class="d-flex flex-column mb-3" style="flex:1">
+                                            <label for="city" class="text-900 font-medium mb-3"
+                                                style="font-size: 14px;">City</label>
+                                            <input id="city" pInputText type="text" formControlName="city" class="w-full"
+                                                [ngClass]="{ 'ng-invalid': contactForm.controls['city'].invalid && contactForm.controls['city'].touched }" />
+                                        </div>
+                                        <div class="d-flex flex-column mb-3" style="flex:1">
+                                            <label for="state" class="text-900 font-medium mb-3" style="font-size: 14px;">State</label>
+                                            <p-dropdown 
+                                                id="state" 
+                                                formControlName="state" 
+                                                [options]="states" 
+                                                optionLabel="name" 
+                                                placeholder="Select a state"
+                                                [ngClass]="{ 'ng-invalid': contactForm.controls['state'].invalid && contactForm.controls['state'].touched }">
+                                            </p-dropdown>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style="display: flex; flex-wrap: wrap; gap:10px">
+                                        <div class="d-flex flex-column mb-3" style="flex:1">
+                                            <label for="country" class="text-900 font-medium mb-3"
+                                                style="font-size: 14px;">Country</label>
+                                            <input id="country" pInputText type="text" formControlName="country"
+                                                class="w-full" readonly value="AU"
+                                                [ngClass]="{ 'ng-invalid': contactForm.controls['country'].invalid && contactForm.controls['country'].touched }" />
+                                        </div>
+                                        <div class="d-flex flex-column mb-3" style="flex:1">
+                                            <label for="postal_code" class="text-900 font-medium mb-3"
+                                                style="font-size: 14px;">Postcode</label>
+                                            <input id="postal_code" pInputText type="number" formControlName="postal_code"
+                                                class="w-full" maxlength="5"
+                                                [ngClass]="{ 'ng-invalid': contactForm.controls['postal_code'].invalid && contactForm.controls['postal_code'].touched }" />
+                                        </div>
+                                    </div>
+    
+                                </div>
+    
+                            </form>
+    
+    
+                            <hr style="margin-bottom: 20px; margin-top: 20px;">
+    
+                            <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between mb-3">
+                                <h4>Payment Method</h4>
+                            </div>
+    
+                            <!-- <div  class="d-flex flex-column mb-3">
+                                <div class="cursor-pointer"
+                                    style="display: flex; align-items: center; gap: 15px;justify-content: space-between;"
+                                    (click)="handlePayment(getTotalPrice(), 'credit')">
+                                    <div id="apple" style="width: 100%;padding: 10px;display: flex;align-items: center;justify-content: center;">
+                                        <div class="zip" style="width: 100%;padding: 10px;">
+                                            <img src="assets/apple.png" alt="Apple Logo"
+                                                style="height: 40px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+    
+                            <div class="d-flex flex-column mb-3">
+    
+                                <div class="payment-option border-top border-start border-end p-3 rounded-top rounded-0 cursor-pointer"
+                                    style="display: flex; align-items: center; gap: 15px;justify-content: space-between;"
+                                    (click)="selectedOptionChanged('credit')"
+                                    [ngClass]="{ 'bg-lightblue': selectedOption === 'credit' }">
+                                    <div style="display: flex;gap: 10px;align-items: center;">
+                                        <input type="radio" name="payment" value="credit" id="credit"
+                                            [(ngModel)]="selectedOption" [value]="'credit'" class="form-check-input"
+                                            style="font-size: 22px; margin-top: 0px;" />
+                                        <label for="credit" style="font-size: 14px; color: #777777;" class="payment-font">
+                                            Debit & Credit Card
+                                        </label>
+                                    </div>
+                                    <img src="assets/visa_master.png" style="height: 40px;" />
+                                </div>
+    
+                                <div class="payment-option border-top border-bottom border-start border-end p-3 rounded-0 cursor-pointer"
+                                    style="display: flex; align-items: center; gap: 15px;justify-content: space-between;"
+                                    (click)="selectedOptionChanged('paypal')"
+                                    (click)="payWithPaypal()"
+                                    [ngClass]="{ 'bg-lightblue': selectedOption === 'paypal' }">
+                                    <div style="display: flex;gap: 10px;align-items: center;">
+                                        <input type="radio" name="payment" value="paypal" id="paypal"
+                                            [(ngModel)]="selectedOption" [value]="'paypal'" class="form-check-input"
+                                            style="font-size: 22px; margin-top: 0px;" />
+                                        <label for="paypal" style="font-size: 14px; color: #777777;" class="payment-font">
+                                            PayPal
+                                        </label>
+                                    </div>`
+                                    <div class="paypal">
+                                        <img src="assets/paypal.png" alt="PayPal Logo" style="height: 40px;" />
+                                    </div>
+                                </div>
+    
+                                <div class="payment-option border-bottom border-start border-end p-3 rounded-bottom cursor-pointer"
+                                    style="display: flex; align-items: center; gap: 15px;justify-content: space-between;"
+                                    (click)="selectedOptionChanged('afterpay')"
+                                    [ngClass]="{ 'bg-lightblue': selectedOption === 'afterpay' }">
+                                    <div style="display: flex;gap: 10px;align-items: center;">
+                                        <input type="radio" name="payment" value="afterpay" id="afterpay"
+                                            [(ngModel)]="selectedOption" [value]="'afterpay'" class="form-check-input"
+                                            style="font-size: 22px; margin-top: 0px;" />
+                                        <label for="afterpay" style="font-size: 14px; color: #777777;" class="payment-font">
+                                            Afterpay
+                                        </label>
+                                    </div>
+                                    <div class="afterpay">
+                                        <img src="assets/afterpay.png" alt="Afterpay Logo" style="height: 40px;" />
+                                    </div>
+                                </div>
+                                <!-- <div class="payment-option border-bottom border-start border-end p-3 rounded-bottom cursor-pointer"
+                                    style="display: flex; align-items: center; gap: 15px;justify-content: space-between;"
+                                    (click)="selectedOptionChanged('zip')"
+                                    [ngClass]="{ 'bg-lightblue': selectedOption === 'zip' }">
+                                    <div style="display: flex;gap: 10px;align-items: center;">
+                                        <input type="radio" name="payment" value="zip" id="zip" [(ngModel)]="selectedOption"
+                                            [value]="'zip'" class="form-check-input"
+                                            style="font-size: 22px; margin-top: 0px;" />
+                                        <label for="zip" style="font-size: 14px; color: #777777;">
+                                            Zip
+                                        </label>
+                                    </div>
+                                    <div class="zip">
+                                        <img src="assets/zip.png" alt="Zip Logo" style="height: 40px;" />
+                                    </div>
+                                </div> -->
+                            </div>
+    
+                            <div class="d-flex flex-column">
+                                <form (submit)="handlePayment(getTotalPrice(), selectedOption)">
+                                    <!-- Kredi Kartı Ödeme Alanı -->
+                                    <div [hidden]="selectedOption !== 'credit'" id="credit">
+                                        <label for="card-element" class="text-900 font-medium mb-3"
+                                            style="font-size: 14px;">Card Details</label>
+                                        <div id="card-element" class="mb-3"></div>
+                                        <div class="flex py-4 gap-2"
+                                            style="width: 100%; display: flex; justify-content:flex-end;">
+                                            <p-button label="Pay" type="submit" [disabled]="!contactForm.valid" />
+                                        </div>
+                                    </div>
+    
+                                    <!-- PayPal Ödeme Butonu -->
+                                    <div [hidden]="selectedOption !== 'paypal'" id="paypal">
+                                        <div id="paypal-button-container"></div>
+                                    </div>
+    
+                                    <!-- Afterpay Ödeme Butonu -->
+                                    <div [hidden]="selectedOption !== 'afterpay'" id="afterpay">
+                                        <div (click)="handlePayment(getTotalPrice(), 'afterpay')" class="afterpay-button">
+                                            <img src="assets/afterpay.png" alt="Afterpay Logo"
+                                                style="height: 40px;margin-left: -20px;" />
+                                        </div>
+                                    </div>
+    
+                                    <!-- Zip Ödeme Butonu -->
+                                    <!-- <div *ngIf="selectedOption === 'zip'" id="zip">
+                                        <div (click)="handlePayment(getTotalPrice(), 'zip')" class="zip-button">
+                                            <img src="assets/zip.png" alt="Zip Logo"
+                                                style="height: 40px;margin-left: -20px;" />
+                                        </div>
+                                    </div> -->
+                                </form>
+                            </div>
+    
+                        </div>
+                        <div class="col-lg-4 col-12 card border rounded shadow-sm" style="padding:30px;  flex: 1;">
+                            <div
+                            class="cart-main flex-lg-row align-items-start align-items-lg-center justify-content-between">
+                                <div style="display: flex; gap: 10px;">
+                                    <i style="font-size: 16px;" class="pi pi-shopping-cart"></i>
+                                    <h4>Your Cart</h4>
+                                </div>
+                                <div class="col mt-lg-0 d-flex justify-content-end align-items-center">
+                                    <span class="text-muted mr-2" style="color: gray; font-size: 14px;"
+                                        (click)="editCart()">Edit Cart</span>
+                                </div>
+                            </div>
+                            <hr style="margin-bottom: 20px; margin-top: 20px;">
+                            <div *ngFor="let product of shoppingCart; let i = index"
+                                style="display: flex;">
+                                <div
+                                    style="max-height: 120px; display: flex; align-items: center; justify-content: center; padding: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+                                    <img [src]="product.imageUrl" class="accordion-img">
+                                </div>
+                                <div
+                                    style="height: 120px; display: flex; flex-direction: column; padding-left: 20px; width: 100%; margin-top: 10px;">
+                                    <div
+                                        style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; color: #5f5f5f;">
+                                        <span style="font-weight: 900; font-size: medium;">{{product.name}}</span>
+                                        <span style="font-weight: bold; font-size: medium;">${{product.price | number: '1.2-2'  }}</span>
+                                    </div>
+                                    <div
+                                        style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; color: #808080;">
+                                        <span style="font-weight: 600; color: #808080;">Code:
+                                            {{product.code}}</span>
+                                        <span style="font-weight: 600; color: #808080;">{{product.selectedTag}}</span>
+                                    </div>
+                                    <div
+                                        style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                                        <span>{{product.countOfProduct}} Piece</span>
+                                        <p-button icon="pi pi-trash" (click)="removeProduct(product)" [rounded]="true"
+                                            [text]="true" [raised]="true" severity="help"></p-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin-bottom: 20px; margin-top: 20px;">
+                            <div style="display: flex; flex-direction: row; gap:10px" *ngIf="!promotionText">
+                                <input class="p-inputtext p-component p-element w-full" placeholder="Promotion Code" pInputText [(ngModel)]="promotion" />
+                                <p-button label="Add" (onClick)="addPromotion()"></p-button>
+                            </div>
+                            <div style="display: flex; flex-direction: row; gap:10px;align-items: center; justify-content: space-between;" *ngIf="promotionText">
+                                <span>{{promotion}} - %{{promotionInfo[0].discount}} Off</span>
+                                <p-button label="Remove" [text]="true" severity="danger" (onClick)="removePromotion()" />
+                            </div>
+                            <hr style="margin-bottom: 20px; margin-top: 20px;">
+                            <div style="display: flex; flex-direction: column; gap:10px">
+                                <div style="display: flex;justify-content: space-between;width: 100%;">
+                                    <span style="font-size: 16px;color: #636161;">
+                                        Subtotal
+                                    </span>
+                                    <span style="font-size: 16px;color: #636161;">
+                                        {{ getSubTotal(discount) | currency:'AUS ' }}
+                                    </span>
+                                </div>
+                                <div style="display: flex;justify-content: space-between;width: 100%;">
+                                    <span style="font-size: 16px;color: #636161;">
+                                        Shipping
+                                    </span>
+                                    <span style="font-size: 16px;color: #636161;">
+                                        {{shipping | currency:'AUS '}}
+                                    </span>
+                                </div>
+                                <div style="display: flex;justify-content: space-between;width: 100%;">
+                                    <span style="font-size: 16px;color: #636161;">
+                                        Total
+                                    </span>
+                                    <span style="font-size: 16px;color: #636161;font-weight: 600;">
+                                        {{ getTotalPrice() | currency:'AUS ' }}
+                                    </span>
+                                </div>
+                            </div>
+                            <hr style="margin-bottom: 20px; margin-top: 20px;">
+                        </div>
+                    </div>
+                </div>
+
+            </ng-template>
+        </p-stepperPanel>
+
+    </p-stepper>
+</div>
